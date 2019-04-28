@@ -6,46 +6,24 @@ import (
 )
 
 func TestDiffMapKeys(t *testing.T) {
-	original := map[string]string{
+	first := map[string]string{
 		"my.super.cool.key": "An awesome value.",
-		"another_key":       "An awesome %@ with %d.",
+		"another_key":       "An awesome %@ with %d that is newer.",
 		"and.a.sweet.key":   "Is the greatest thing ever %@!",
 	}
-	other := map[string]string{
+	second := map[string]string{
 		"my.super.cool.key": "An awesome value.",
-		"another_key":       "An awesome %@ with %d.",
+		"another_key":       "An awesome %@ with %d that is old.",
 	}
 	want := map[string]string{
+		"another_key":     "An awesome %@ with %d that is newer.",
 		"and.a.sweet.key": "Is the greatest thing ever %@!",
 	}
 
-	got := DiffMapKeys(original, other)
+	got := DiffMap(first, second)
 	eq := reflect.DeepEqual(got, want)
 
 	if !eq {
-		t.Errorf("DiffMapKeys() = %v, want %v", got, want)
-	}
-}
-
-func TestDiffMapValues(t *testing.T) {
-	original := map[string]string{
-		"my.super.cool.key": "An awesome value.",
-		"another_key":       "An awesome %@ with %d.",
-		"and.a.sweet.key":   "Is the greatest thing ever %@!",
-	}
-	other := map[string]string{
-		"my.super.cool.key": "An awesome value.",
-		"another_key":       "An awesome %@ with %d.",
-		"and.a.sweet.key":   "New value is different!",
-	}
-	want := map[string]string{
-		"and.a.sweet.key": "Is the greatest thing ever %@!",
-	}
-
-	got := DiffMapValues(original, other)
-	eq := reflect.DeepEqual(got, want)
-
-	if !eq {
-		t.Errorf("DiffMapValues() = %v, want %v", got, want)
+		t.Errorf("DiffMap() = %v, want %v", got, want)
 	}
 }

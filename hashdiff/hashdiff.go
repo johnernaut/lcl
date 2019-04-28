@@ -1,28 +1,20 @@
 package hashdiff
 
-// DiffMapKeys returns the original diff'd keys/values that differ from the first maps keys
-func DiffMapKeys(firstMappings map[string]string,
+// DiffMap returns the original diff'd keys/values that differ from the second maps keys/values
+func DiffMap(firstMappings map[string]string,
 	secondMappings map[string]string) map[string]string {
 	diffMap := map[string]string{}
 
-	for k, v := range firstMappings {
-		if _, ok := secondMappings[k]; !ok {
-			diffMap[k] = v
-		}
-	}
+	for k, originalVal := range firstMappings {
+		secondVal, ok := secondMappings[k]
 
-	return diffMap
-}
-
-// DiffMapValues returns the original diff'd keys/values that differ from the first maps values
-func DiffMapValues(firstMappings map[string]string,
-	secondMappings map[string]string) map[string]string {
-	diffMap := map[string]string{}
-
-	for k, v := range firstMappings {
-		if val, ok := secondMappings[k]; ok {
-			if val != v {
-				diffMap[k] = v
+		// key not found in second map
+		if !ok {
+			diffMap[k] = originalVal
+		} else {
+			// key found in second map but the values differ
+			if secondVal != originalVal {
+				diffMap[k] = originalVal
 			}
 		}
 	}
