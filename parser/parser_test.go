@@ -7,12 +7,12 @@ import (
 
 func TestParseLines(t *testing.T) {
 	lines := []string{
-		`"my.super.cool.key" = "An awesome value."`,
+		`"my.super.cool.key" = "An awesome value with \"inline\"."`,
 		`"another_key" = "An awesome %@ with %d."`,
 		`//"commented" = "Commented key"`,
 	}
 	want := map[string]string{
-		"my.super.cool.key": "An awesome value.",
+		"my.super.cool.key": `An awesome value with \"inline\".`,
 		"another_key":       "An awesome %@ with %d.",
 	}
 

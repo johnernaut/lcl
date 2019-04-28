@@ -7,6 +7,11 @@ import (
 	"strings"
 )
 
+var commentRegexp = regexp.MustCompile("(?s)//.*?\n|/\\*.*?\\*/")
+var emptyLineRegexp = regexp.MustCompile(`(?m)^\s*$[\r\n]*|[\r\n]+\s+\z`)
+
+// ParseLocaleFile opens and parses a file from a path and returns its
+// key/values in a map[string]string pair
 func ParseLocaleFile(fileName string) (map[string]string, error) {
 	lines := []string{}
 
@@ -29,15 +34,10 @@ func ParseLocaleFile(fileName string) (map[string]string, error) {
 	scanner.Buffer(buf, int(bufCapacity))
 	scanner.Split(splitOnSemiColon)
 
-	// remove empty lines
-	re := regexp.MustCompile(`(?m)^\s*$[\r\n]*|[\r\n]+\s+\z`)
-	// remove comments
-	reComment := regexp.MustCompile("(?s)//.*?\n|/\\*.*?\\*/")
-
 	for scanner.Scan() {
 		line := scanner.Text()
-		line = strings.Trim(re.ReplaceAllString(line, ""), "\r\n")
-		line = reComment.ReplaceAllString(line, "")
+		line = strings.Trim(emptyLineRegexp.ReplaceAllString(line, ""), "\r\n")
+		line = commentRegexp.ReplaceAllString(line, "")
 		lines = append(lines, line)
 	}
 
@@ -94,5 +94,7 @@ func formatKey(key string) (string, bool) {
 }
 
 func formatValue(value string) string {
-	return strings.TrimSpace(strings.Replace(value, "\"", "", -1))
+	parsedValue := strings.TrimSpace(value)
+	parsedValue = strings.TrimSuffix(parsedValue, "\"")
+	return strings.TrimPrefix(parsedValue, "\"")
 }
