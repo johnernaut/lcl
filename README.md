@@ -1,6 +1,7 @@
 # lcl
 
 [![CircleCI](https://circleci.com/gh/johnernaut/lcl.svg?style=svg)](https://circleci.com/gh/johnernaut/lcl)
+[![Maintainability](https://api.codeclimate.com/v1/badges/1e40352165fd9b281485/maintainability)](https://codeclimate.com/github/johnernaut/lcl/maintainability)
 
 ## Usage
 * `go install https://github.com/johnernaut/lcl`
