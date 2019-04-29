@@ -1,0 +1,10 @@
+
+/* A cool comment */
+"termination.details.body" = "1. Any shifts he/she had scheduled will move to “Open Shifts”\
+2. The employee will lose access to their mobile application for terminated location(s)\
+3. The employee will not be able to access their prior schedule but he/she will have access to their own time card history\
+4. The employee PIN will be disabled for the time clock\n5. The employee will NOT be notified that they have been terminated";
+
+/* another comment */
+//"some.commented.key" = "Hellooooo!  %@ Perrson.";
+"With.legit.key" = "Again, %@ is here and they are %d years old.";
