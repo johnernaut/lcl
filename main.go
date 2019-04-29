@@ -19,6 +19,13 @@ type configuration struct {
 	targetLocaleKey    string
 }
 
+func main() {
+	loadConfig()
+	diffedValues := getChangesFromMaster(config.lastTranslatedFile, config.masterLocaleFile)
+
+	log.Printf("%+v\n", diffedValues)
+}
+
 func loadConfig() {
 	lastTranslatedPath, err := filepath.Abs("config/last_translated_version.strings")
 	if err != nil {
@@ -49,13 +56,6 @@ func loadConfig() {
 		targetLocaleFile:   *targetLocaleFile,
 		targetLocaleKey:    *localeKey,
 	}
-}
-
-func main() {
-	loadConfig()
-	diffedValues := getChangesFromMaster(config.lastTranslatedFile, config.masterLocaleFile)
-
-	log.Printf("%+v\n", diffedValues)
 }
 
 func getChangesFromMaster(lastTranslated, original string) map[string]string {
